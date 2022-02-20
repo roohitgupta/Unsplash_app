@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    #container {
+      display: flex;
+      height: 500px;
+    }
+
+    #sidebar {
+      flex: 3;
+      border: 3px solid black;
+    }
+
+    #main {
+      flex: 7;
+      border: 3px solid black;
+      display: grid;
+      grid-template-columns: repeat(3, 30%);
+      grid-gap: 3%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="sidebar">
+
+      <div>Menu</div>
+      <div>Login</div>
+      <div>Sign Up</div>
+      <input type="text" placeholder="Search" id="searchbar">
+      <div>API</div>
+      <div>News</div>
+      
+    </div>
+
+    <div id="main">
+    
+
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script type="module">
+
+  import sidebar from './components/sidebar.js'
+  import { makeAPIcall, appendPictures } from './scripts/main.js'
+
+
+
+
+  let sidebar_div = document.getElementById('sidebar');
+
+  sidebar_div.innerHTML = sidebar();
+
+  let images_Data = await makeAPIcall(`https://api.unsplash.com/photos/?client_id=TnpoTGKKgbYNfMXhHISwqxNDCySwwrqJme9tnzb0QaA`);
+  console.log('imgaes_Data:', images_Data);
+
+  parent = document.getElementById('main');
+
+  appendPictures(images_Data, parent);
+
+  let input = document.getElementById('searchbar');
+  input.addEventListener('keypress', (event) =>{
+    if(event.key === 'Enter'){
+      let input_value = document.getElementById('searchbar').value;
+      localStorage.setItem('search_term', input_value);
+      location.href = 'search.html';
+    }
+  } )
+
+
+
+
+
+</script>
